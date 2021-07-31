@@ -13,6 +13,13 @@ const createStore = (req, res, next) => {
   });
 };
 
+const getAllStore = async (req, res, next) => {
+  const allStores = await StoreModel.find({});
+
+  if (allStores.length == 0) return res.status(statusCode.NoContent).end();
+  return res.json(allStores);
+};
 module.exports = {
   createStore,
+  getAllStore,
 };

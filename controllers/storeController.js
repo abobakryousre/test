@@ -5,10 +5,12 @@ const statusCode = require("../helper/statusCode");
 const createStore = (req, res, next) => {
   const data = req.body;
 
+  // attach the image to data object, after the file uploader middleware work
+  data.logo = req.file?.path;
+
   // validate data before create a new store
   validator.validateCreateStore(data, async (err) => {
     if (err) return res.status(statusCode.BadRequest).json({ error: err });
-
     const newStore = new StoreModel({ ...data });
     await newStore.save();
     return res.status(statusCode.Created).json(newStore);
@@ -54,6 +56,14 @@ const updateStore = async (req, res, next) => {
       return res
         .status(statusCode.BadRequest)
         .json({ errors: "store does not exist!" });
+
+    // replace the new logo if updated
+    if (req.file?.path) {
+      data = {
+        ...data,
+        logo: req.file.path,
+      };
+    }
 
     // validate the updated body
     validator.validateCreateStore(data, async (err) => {

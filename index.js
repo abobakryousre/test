@@ -18,8 +18,11 @@ app.use(cors());
 
 const storeRouter = require("./routes/storeRouter");
 
+// store Router
 app.use("/store", storeRouter);
 
+// serve static assets
+app.use("/public", express.static("public"));
 // database connection
 mongoose.connect(
   process.env.MONGODB_CONNECTION_URL || config.MONGODB_CONNECTION_URL,

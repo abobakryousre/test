@@ -1,6 +1,7 @@
 const StoreModel = require("../models/storeModel");
 const validator = require("../helper/validator");
 const statusCode = require("../helper/statusCode");
+const fs = require("fs");
 
 const createStore = (req, res, next) => {
   const data = req.body;
@@ -35,7 +36,13 @@ const deleteStore = async (req, res, next) => {
         .status(statusCode.BadRequest)
         .json({ errors: "store does not exist!" });
     }
-    await StoreModel.findByIdAndDelete({ _id: storeId });
+    const store = await StoreModel.findOne({ _id: storeId });
+
+    // remove the logo from the public file
+    await fs.unlinkSync(store.logo);
+
+    // delete the document from database
+    await store.remove();
     return res.status(statusCode.Success).end();
   } catch (error) {
     return res

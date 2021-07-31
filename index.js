@@ -18,7 +18,7 @@ app.use(cors());
 
 const storeRouter = require("./routes/storeRouter");
 
-app.use("/", storeRouter);
+app.use("/store", storeRouter);
 
 // database connection
 mongoose.connect(

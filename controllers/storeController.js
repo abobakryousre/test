@@ -1,9 +1,9 @@
 const StoreModel = require("../models/storeModel");
 const validator = require("../helper/validator");
 const statusCode = require("../helper/statusCode");
+
 const createStore = (req, res, next) => {
   const data = req.body;
-
   validator.validateCreateStore(data, async (err) => {
     if (err) return res.status(statusCode.BadRequest).json({ error: err });
 
@@ -15,11 +15,24 @@ const createStore = (req, res, next) => {
 
 const getAllStore = async (req, res, next) => {
   const allStores = await StoreModel.find({});
-
   if (allStores.length == 0) return res.status(statusCode.NoContent).end();
   return res.json(allStores);
+};
+
+const deleteStore = async (req, res, next) => {
+  const storeId = req.params.id;
+  const storeExist = await StoreModel.exists({ _id: storeId });
+  if (storeExist) {
+    await StoreModel.findByIdAndDelete({ _id: storeId });
+    return res.status(statusCode.Success).end();
+  } else {
+    return res
+      .status(statusCode.BadRequest)
+      .json({ errors: "store does not exist!" });
+  }
 };
 module.exports = {
   createStore,
   getAllStore,
+  deleteStore,
 };

@@ -6,4 +6,5 @@ Router.route("/")
   .post(storeController.createStore)
   .get(storeController.getAllStore);
 
+Router.route("/:id").delete(storeController.deleteStore);
 module.exports = Router;

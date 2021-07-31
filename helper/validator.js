@@ -13,8 +13,8 @@ const validateCreateStore = (data, callback) => {
   const chechedAttributes = ["name", "description", "logo"];
 
   chechedAttributes.forEach((attribute) => {
-    errors[attribute] = errorMessages[attribute];
     if (!data[attribute] || typeof data[attribute] !== "string") {
+      errors[attribute] = errorMessages[attribute];
     }
   });
 

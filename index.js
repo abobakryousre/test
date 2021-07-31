@@ -16,6 +16,10 @@ app.use(express.json());
 // accepte different origin
 app.use(cors());
 
+const storeRouter = require("./routes/storeRouter");
+
+app.use("/", storeRouter);
+
 // database connection
 mongoose.connect(
   process.env.MONGODB_CONNECTION_URL || config.MONGODB_CONNECTION_URL,

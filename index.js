@@ -18,6 +18,12 @@ app.use(cors());
 
 const storeRouter = require("./routes/storeRouter");
 
+app.use("/", (req,res) => {
+
+	return res.json({message: "hello world"});
+
+});
+
 // store Router
 app.use("/store", storeRouter);
 

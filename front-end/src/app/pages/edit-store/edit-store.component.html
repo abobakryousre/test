@@ -1,0 +1,11 @@
+<div class="container mt-3">
+  <div class="row">
+    <h3>Edit Store</h3>
+    <div class="col-12">
+      <app-store-form
+        [store]="store"
+        (saveEvent)="editStore($event)"
+      ></app-store-form>
+    </div>
+  </div>
+</div>

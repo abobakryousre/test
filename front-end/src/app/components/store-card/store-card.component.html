@@ -1,0 +1,17 @@
+<div class="card mb-4">
+  <img
+    [src]="baseUrl + store.storeLogo"
+    class="card-img-top img-fluid"
+    (error)="handlenImgError($event)"
+    style="height: 200px"
+  />
+  <div class="card-body">
+    <h5 class="card-title">
+      {{ store.storeName | titlecase }}
+    </h5>
+    <p class="card-text">{{ store.storeDescription | slice: 0:50 }}...</p>
+    <button [routerLink]="'/stores-list/' + store._id" class="btn btn-primary">
+      Show
+    </button>
+  </div>
+</div>

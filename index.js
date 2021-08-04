@@ -1,51 +1,46 @@
-"use strict";
 const express = require("express");
-const cors = require("cors");
 const app = express();
 const mongoose = require("mongoose");
+const configs = require("./config");
+const cors = require("cors");
 
-// loading enviroment variables
-require("dotenv").config();
+// get the enviornment configs
+const ENV = process.env.NODE_ENV || "dev";
+const { DB_URI, PORT } = configs[ENV];
 
-// loacl developemnt cnofiguration
-const config = require("./config");
+// connect to data base
+// mongoose
+//   .connect(DB_URI, {
+//     useNewUrlParser: true,
+//     useUnifiedTopology: true,
+//     useFindAndModify: false,
+//     useCreateIndex: true,
+//   })
+//   .then(() => {
+// app.listen(process.env.PORT || PORT, (err) => {
+//   if (err) return console.log(err.message);
+//   console.log("Server started on port: " + process.env.PORT || PORT);
+// });
+//   })
+//   .catch((err) => {
+//     console.log(err.message);
+//   });
 
-// adding body parser middleware
-app.use(express.json());
-
-// accepte different origin
-app.use(cors());
-
-const storeRouter = require("./routes/storeRouter");
+app.listen(process.env.PORT || PORT, (err) => {
+  if (err) return console.log(err.message);
+  console.log("Server started on port: " + process.env.PORT || PORT);
+});
 
 app.use("/", (req, res) => {
   return res.json({ message: "hello montes" });
 });
 
-// store Router
-app.use("/store", storeRouter);
+//  add middlewares
+app.use(express.json());
+app.use(cors());
 
-// serve static assets
-app.use("/public", express.static("public"));
-// database connection
-//mongoose.connect(
-//  process.env.MONGODB_CONNECTION_URL || config.MONGODB_CONNECTION_URL,
-//  {
-//   useNewUrlParser: true,
-//   useUnifiedTopology: true,
-//   useFindAndModify: false,
-//   useCreateIndex: true,
-// },
-// (err) => {
-//   if (err) return console.log(`Database Connection Error: ${err}`);
+// static files middleware
+app.use("/public", express.static("public/"));
 
-// }
-//);
-
-// lanuch the application
-app.listen(process.env.PORT || config.APP_PORT, (err) => {
-  if (!err)
-    console.log(
-      `app listen on port ${process.env.APP_PORT || config.APP_PORT}`
-    );
-});
+// add routes
+app.use("/stores", require("./routes/stores"));

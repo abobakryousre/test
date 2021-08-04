@@ -1,0 +1,38 @@
+<div class="container mt-3">
+  <div *ngIf="storesList.length > 0; else unavailable">
+    <div class="row">
+      <div class="col-12">
+        <app-filter (searchEvent)="search($event)"></app-filter>
+      </div>
+      <div class="col-12 my-3">
+        <button routerLink="/add-store" class="btn btn-success float-end">
+          <i class="fas fa-plus"></i>
+        </button>
+      </div>
+      <div class="col-12">
+        <app-store-table
+          (deleteStore)="delete($event)"
+          [page]="page"
+          [totalDocs]="totalDocs"
+          [stores]="storesList"
+        ></app-store-table>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-12 text-center">
+        <pagination-controls
+          previousLabel="Prev"
+          nextLabel="Next"
+          [responsive]="true"
+          (pageChange)="handlePageChane($event)"
+        ></pagination-controls>
+      </div>
+    </div>
+  </div>
+</div>
+<ng-template #unavailable>
+  <div class="alert alert-info">
+    No Available Stores
+    <a routerLink="/add-store" class="alert-link">Create Store</a>.
+  </div>
+</ng-template>

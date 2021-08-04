@@ -1,0 +1,47 @@
+<div class="table-responsive">
+  <table class="table table-striped table-borderd align-baseline">
+    <thead class="table-dark">
+      <tr>
+        <th>Store Name</th>
+        <th>Store Description</th>
+        <th>Store Logo</th>
+        <th colspan="2">actions</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr
+        *ngFor="
+          let store of stores
+            | paginate
+              : { itemsPerPage: 5, currentPage: page, totalItems: totalDocs }
+        "
+      >
+        <td>{{ store.storeName | titlecase }}</td>
+        <td>{{ store.storeDescription | slice: 0:50 }}...</td>
+        <td>
+          <img
+            [src]="baseUrl + store.storeLogo"
+            (error)="handlenImgError($event)"
+            class="img-fluid"
+          />
+        </td>
+        <td class="text-center">
+          <button
+            [routerLink]="'/edit-store/' + store._id"
+            class="btn btn-primary mx-2"
+          >
+            <i class="far fa-edit"></i>
+          </button>
+        </td>
+        <td>
+          <button
+            class="btn btn-danger"
+            (click)="deleteConfirmation(store._id)"
+          >
+            <i class="far fa-trash-alt"></i>
+          </button>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</div>

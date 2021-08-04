@@ -1,0 +1,72 @@
+<form #storeForm="ngForm" (ngSubmit)="submit(storeForm)">
+  <div class="mb-3">
+    <label for="storeName" class="form-label">Store Name</label>
+    <input
+      type="email"
+      class="form-control"
+      id="storeName"
+      [(ngModel)]="store.storeName"
+      #name="ngModel"
+      name="storeName"
+      required
+      minlength="3"
+      [ngClass]="{
+        'is-invalid': (storeForm.submitted || name.touched) && !name.valid
+      }"
+    />
+    <div
+      *ngIf="(storeForm.submitted || name.touched) && !name.valid"
+      class="form-text"
+    >
+      <div class="alert alert-danger" *ngIf="name.errors?.required">
+        Store Name is required.
+      </div>
+      <div class="alert alert-danger" *ngIf="name.errors?.minlength">
+        Store Name must be at least 3 characters.
+      </div>
+    </div>
+  </div>
+  <div class="mb-3">
+    <label for="storeDescription" class="form-label">Store Description</label>
+    <textarea
+      class="form-control"
+      [(ngModel)]="store.storeDescription"
+      #description="ngModel"
+      name="storeDescription"
+      id="storeDescription"
+      cols="30"
+      rows="10"
+      required
+      minlength="15"
+      [ngClass]="{
+        'is-invalid':
+          (storeForm.submitted || description.touched) && !description.valid
+      }"
+    ></textarea>
+    <div
+      *ngIf="(storeForm.submitted || description.touched) && !description.valid"
+      class="form-text"
+    >
+      <div class="alert alert-danger" *ngIf="description.errors?.required">
+        Store Description is required.
+      </div>
+      <div class="alert alert-danger" *ngIf="description.errors?.minlength">
+        Store Description must be at least 15 characters.
+      </div>
+    </div>
+  </div>
+  <div class="mb-3">
+    <label for="storeLogo" class="form-label">Store Logo</label>
+    <input
+      (change)="handleLogoChange($event)"
+      type="file"
+      class="form-control"
+      [(ngModel)]="store.storeLogo"
+      #logo="ngModel"
+      name="storeLogo"
+      id="storeLogo"
+      accept="image/*"
+    />
+  </div>
+  <button type="submit" class="btn btn-success">Save</button>
+</form>

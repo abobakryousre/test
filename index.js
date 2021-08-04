@@ -30,22 +30,22 @@ app.use("/store", storeRouter);
 // serve static assets
 app.use("/public", express.static("public"));
 // database connection
-mongoose.connect(
-  process.env.MONGODB_CONNECTION_URL || config.MONGODB_CONNECTION_URL,
-  {
-    useNewUrlParser: true,
-    useUnifiedTopology: true,
-    useFindAndModify: false,
-    useCreateIndex: true,
-  },
-  (err) => {
-    if (err) return console.log(`Database Connection Error: ${err}`);
+//mongoose.connect(
+//  process.env.MONGODB_CONNECTION_URL || config.MONGODB_CONNECTION_URL,
+//  {
+ //   useNewUrlParser: true,
+ //   useUnifiedTopology: true,
+ //   useFindAndModify: false,
+ //   useCreateIndex: true,
+ // },
+ // (err) => {
+ //   if (err) return console.log(`Database Connection Error: ${err}`);
 
-  }
-);
+ // }
+//);
 
 // lanuch the application
-    app.listen(process.env.APP_PORT || config.APP_PORT, (err) => {
+ app.listen(process.env.PORT || config.APP_PORT, (err) => {
       if (!err)
         console.log(
           `app listen on port ${process.env.APP_PORT || config.APP_PORT}`

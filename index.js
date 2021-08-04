@@ -18,10 +18,8 @@ app.use(cors());
 
 const storeRouter = require("./routes/storeRouter");
 
-app.use("/", (req,res) => {
-
-	return res.json({message: "hello world"});
-
+app.use("/", (req, res) => {
+  return res.json({ message: "hello montes" });
 });
 
 // store Router
@@ -33,21 +31,21 @@ app.use("/public", express.static("public"));
 //mongoose.connect(
 //  process.env.MONGODB_CONNECTION_URL || config.MONGODB_CONNECTION_URL,
 //  {
- //   useNewUrlParser: true,
- //   useUnifiedTopology: true,
- //   useFindAndModify: false,
- //   useCreateIndex: true,
- // },
- // (err) => {
- //   if (err) return console.log(`Database Connection Error: ${err}`);
+//   useNewUrlParser: true,
+//   useUnifiedTopology: true,
+//   useFindAndModify: false,
+//   useCreateIndex: true,
+// },
+// (err) => {
+//   if (err) return console.log(`Database Connection Error: ${err}`);
 
- // }
+// }
 //);
 
 // lanuch the application
- app.listen(process.env.PORT || config.APP_PORT, (err) => {
-      if (!err)
-        console.log(
-          `app listen on port ${process.env.APP_PORT || config.APP_PORT}`
-        );
-    });
+app.listen(process.env.PORT || config.APP_PORT, (err) => {
+  if (!err)
+    console.log(
+      `app listen on port ${process.env.APP_PORT || config.APP_PORT}`
+    );
+});
